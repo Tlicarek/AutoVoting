@@ -1,11 +1,6 @@
 const fetch = require('node-fetch');
 
-async function voteForProject() {
-    const project = {
-        id: 'czech-craft',
-        nick: 'Tlicarek',
-        url: 'https://czech-craft.eu/server/mcserverlist'
-    };
+async function voteForProject(project) {
     const url = `${project.url}?username=${project.nick}`;
     console.log(`Voting for project: ${project.id}, URL: ${url}`);
 
@@ -19,4 +14,23 @@ async function voteForProject() {
     }
 }
 
-voteForProject();
+async function main() {
+    const projects = [
+        {
+            id: 'czech-craft',
+            nick: 'Tlicarek',
+            url: 'https://czech-craft.eu/server/mcserverlist'
+        },
+        {
+            id: 'mcserver-list',
+            nick: 'Tlicarek',
+            url: 'https://mcserver-list.eu/en/vote/432'
+        }
+    ];
+
+    for (const project of projects) {
+        await voteForProject(project);
+    }
+}
+
+main();

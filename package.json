@@ -1,12 +1,11 @@
 {
   "name": "auto-vote-bot",
   "version": "1.0.0",
-  "description": "Automated voting bot for Minecraft server listings",
   "main": "index.js",
   "scripts": {
     "start": "node index.js"
   },
   "dependencies": {
-    "node-fetch": "^2.6.1"
+    "puppeteer": "^19.0.0"
   }
 }

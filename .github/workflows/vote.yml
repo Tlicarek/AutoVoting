@@ -1,25 +1,19 @@
-name: Auto Vote
+name: Vote on MCServer-List.eu
 
 on:
   schedule:
-    - cron: '0 0 * * *'  # Runs every day at midnight
-  workflow_dispatch:
+    - cron: 0 */2 * * *
 
 jobs:
   vote:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
-
-    - name: Set up Node.js
-      uses: actions/setup-node@v2
-      with:
-        node-version: '16'
-
-    - name: Install dependencies
-      run: npm install
-
-    - name: Run voting script
-      run: node index.js
+      - name: Vote
+        env:
+          USERNAME: Tlicarek
+          VOTE_URL: https://mcserver-list.eu/sk/vote/432
+        run: |
+          curl -X POST \
+            ${VOTE_URL} \
+            -H 'Content-Type: application/x-www-form-urlencoded' \
+            -d "username=${USERNAME}"

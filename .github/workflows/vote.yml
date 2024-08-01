@@ -12,6 +12,7 @@ jobs:
         env:
           USERNAME: Tlicarek
           VOTE_URL: https://mcserver-list.eu/sk/vote/432
+        run: ferf
         run: |
           curl -X POST \
             ${VOTE_URL} \

@@ -28,4 +28,4 @@ jobs:
       run: |
         node vote-script.js  # Your voting script in Node.js
       env:
-        VOTE_URL: "https://example.com/vote"
+        VOTE_URL: "https://www.minecraft-list.cz/server/dreamland-l-kvalitni-survival-servery/vote?name=Tlicarek"

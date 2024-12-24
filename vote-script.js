@@ -30,7 +30,6 @@ async function vote(first) {
     // Handle possible errors and alerts
     if (document.querySelector('.alert.alert-primary') && document.querySelector('.alert.alert-primary').textContent.includes('reCaptcha')) {
         console.log("Detected reCAPTCHA, solving...");
-        // Reattempt logic or custom solving solution can be added here.
         return;
     }
 
@@ -40,9 +39,8 @@ async function vote(first) {
         console.log("GDPR consent given.");
     }
 
-    // Fill out the nickname and vote
-    const project = await getProject();
-    document.querySelector('input[name="username"]').value = project.nick;
+    // Manually set the username (if not using getProject)
+    document.querySelector('input[name="username"]').value = "YourUsernameHere";  // Replace with desired username
 
     // Submit the vote
     const voteButton = document.querySelector('div.vote__box__buttonRow__button button[type="submit"]');
@@ -50,4 +48,25 @@ async function vote(first) {
         voteButton.click();
         console.log("Vote submitted.");
     }
+
+    // Wait for the page to update after the vote is cast
+    await new Promise(resolve => setTimeout(resolve, 3000)); // Wait 3 seconds for the page to reload or display message
+
+    // Check for success message
+    const successMessage = document.querySelector('.alert.alert-success');
+    if (successMessage) {
+        console.log("Vote successful: " + successMessage.textContent);
+        return;
+    }
+
+    // Check for 'already voted' message
+    const alreadyVotedMessage = document.querySelector('.alert.alert-danger');
+    if (alreadyVotedMessage && alreadyVotedMessage.textContent.includes('You have already voted')) {
+        console.log("Already voted.");
+        return;
+    }
+
+    // If neither, manually inspect the page for confirmation or errors
+    console.log("Vote result unclear. Check page for success/error messages.");
 }
+

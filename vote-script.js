@@ -1,9 +1,11 @@
 async function vote(first) {
+    // Check if the body is empty
     if (document.body.innerHTML.length === 0) {
         console.log("Empty body, returning...");
         return;
     }
 
+    // Check if the vote was already successful
     if (document.querySelector('.alert.alert-success')) {
         console.log("Vote already successful.");
         return;
@@ -27,26 +29,37 @@ async function vote(first) {
         }
     }
 
-    // Handle possible errors and alerts
+    // Check for reCAPTCHA alert
     if (document.querySelector('.alert.alert-primary') && document.querySelector('.alert.alert-primary').textContent.includes('reCaptcha')) {
         console.log("Detected reCAPTCHA, solving...");
         return;
     }
 
     // Ensure GDPR is accepted
-    if (document.querySelector('#gdpr') && !document.querySelector('#gdpr').checked) {
-        document.querySelector('#gdpr').checked = true;
+    const gdprCheckbox = document.querySelector('#gdpr');
+    if (gdprCheckbox && !gdprCheckbox.checked) {
+        gdprCheckbox.checked = true;
         console.log("GDPR consent given.");
     }
 
-    // Manually set the username (if not using getProject)
-    document.querySelector('input[name="username"]').value = "YourUsernameHere";  // Replace with desired username
+    // Set the username (replace "YourUsernameHere" with the desired username)
+    const usernameInput = document.querySelector('input[name="username"]');
+    if (usernameInput) {
+        usernameInput.value = "YourUsernameHere";
+        console.log("Username set.");
+    } else {
+        console.log("Username input not found.");
+        return;
+    }
 
     // Submit the vote
     const voteButton = document.querySelector('div.vote__box__buttonRow__button button[type="submit"]');
     if (voteButton) {
         voteButton.click();
         console.log("Vote submitted.");
+    } else {
+        console.log("Vote button not found.");
+        return;
     }
 
     // Wait for the page to update after the vote is cast
@@ -67,6 +80,8 @@ async function vote(first) {
     }
 
     // If neither, manually inspect the page for confirmation or errors
+    console.log("Vote result unclear. Check page for success/error messages.");
+} confirmation or errors
     console.log("Vote result unclear. Check page for success/error messages.");
 }
 
